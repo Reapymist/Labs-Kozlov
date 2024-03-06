@@ -1,0 +1,112 @@
+body {
+    font-family: 'Times New Roman', sans-serif;
+    background-color: #325050;;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+#tasks {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 1rem auto;
+    padding: 1rem;
+    max-width: 600px;
+}
+
+#addTaskForm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#addTaskForm input[type="text"] {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#addTaskForm button[type="submit"] {
+    font-family: 'Times New Roman', sans-serif;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+#addTaskForm button[type="submit"]:hover {
+    background-color: #444;
+}
+
+#deleteAllTasks {
+    font-family: 'Times New Roman', sans-serif;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+#deleteAllTasks:hover {
+    background-color: #e53935;
+}
+
+#taskList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#taskList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#taskList li:last-child {
+    border-bottom: none;
+}
+
+#taskList button {
+    font-family: 'Times New Roman', sans-serif;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+}
+
+#taskList button:hover {
+    background-color: #e53935;
+}
+
+/* Добавленные стили для полоски внизу и надписи Copyright */
+#footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#copyright {
+    font-size: 14px;
+}
