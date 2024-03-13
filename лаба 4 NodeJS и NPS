@@ -1,0 +1,148 @@
+Отчёт по лабораторной работе №4 NodeJS и NPM.
+Выполнил: Сергей Будченко студент 2 курса.
+Группа: 2207са1.	
+Задача 1.
+const fs = require('fs');
+
+const filePath = 'путь_к_вашему_файлу.txt'; // Укажите путь к вашему текстовому файлу
+
+// Чтение файла
+fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+        console.error('Ошибка чтения файла:', err);
+        return;
+    }
+
+    // Разворот содержимого файла
+    const reversedData = data.split('').reverse().join('');
+
+    // Запись развернутых данных обратно в файл
+    fs.writeFile(filePath, reversedData, 'utf8', (err) => {
+        if (err) {
+            console.error('Ошибка записи файла:', err);
+            return;
+        }
+
+        console.log('Файл успешно перевернут и сохранен.');
+    });
+});
+
+Задача 2.
+const fs = require('fs');
+const http = require('http');
+const url = require('url');
+const path = require('path');
+
+// Создание HTTP-сервера
+const server = http.createServer((req, res) => {
+    // Анализ URL-адреса запроса
+    const parsedUrl = url.parse(req.url, true);
+    
+    // Задание пути к файлу в текущей директории
+    const filePath = path.join(__dirname, 'файл.txt'); // Замените на актуальный путь к вашему файлу
+
+    // Обработка GET запроса на корневом пути
+    if (parsedUrl.pathname === '/' && req.method === 'GET') {
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                // Обработка ошибки чтения файла
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.end('Internal Server Error');
+                return;
+            }
+
+            // Отправка содержимого файла в ответ на GET запрос
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.end(data);
+        });
+    } 
+    // Обработка POST запроса на корневом пути
+    else if (parsedUrl.pathname === '/' && req.method === 'POST') {
+        let body = '';
+        
+        // Обработка данных POST запроса
+        req.on('data', (chunk) => {
+            body += chunk;
+        });
+
+        // Обработка завершения запроса
+        req.on('end', () => {
+            // Добавление данных к файлу
+            fs.appendFile(filePath, body, 'utf8', (err) => {
+                if (err) {
+                    // Обработка ошибки добавления данных к файлу
+                    res.writeHead(500, {'Content-Type': 'text/plain'});
+                    res.end('Internal Server Error');
+                    return;
+                }
+
+                // Успешный ответ на POST запрос
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end('Data successfully appended to the file');
+            });
+        });
+    } 
+    // Обработка всех других случаев (неправильный путь)
+    else {
+        res.writeHead(404, {'Content-Type': 'text/plain'});
+        res.end('Not Found');
+    }
+});
+
+// Задание порта и запуск сервера
+const port = 3000;
+server.listen(port, () => {
+    console.log(`Сервер запущен на порту ${port}`);
+});
+
+Часть 2
+Задача 1,2.
+
+//Создайте новую директорию для проекта и перейдите в неё через терминал:
+mkdir nodejs_project
+cd nodejs_project
+
+//Инициализируем проект с помощью npm:
+npm init -y
+
+Установите библиотеку lodash:
+npm install lodash
+
+//Создаём файл index.js в корне вашего проекта и добавьте следующий код:
+const _ = require('lodash');
+
+const users = [
+  { user: 'fred',   age: 48 },
+  { user: 'barney', age: 36 },
+  { user: 'fred',   age: 40 },
+  { user: 'barney', age: 34 }
+];
+
+const sortedUsers = _.sortBy(users, 'age');
+
+console.log(sortedUsers);
+
+//В нашем package.json добавим поле "scripts" следующим образом:
+"scripts": {
+  "start": "node index.js"
+}
+
+//Теперь наш package.json выглядит примерно так:
+{
+  "name": "nodejs_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
+
+//Теперь запускаем код через npm:
+npm start
