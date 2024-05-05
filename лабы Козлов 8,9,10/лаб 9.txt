@@ -1,0 +1,50 @@
+ЗАДАЧА 1
+
+import React from 'react';
+
+class Square extends React.Component {
+  render() {
+    const { n } = this.props;
+    const square = n * n;
+    return <div>{square}</div>;
+  }
+}
+
+export default Square;
+
+ЗАДАЧА 2 
+
+import React from 'react';
+
+class OnlyEven extends React.Component {
+  render() {
+    const { arr } = this.props;
+    const evenNumbers = arr.filter(num => num % 2 === 0);
+    return (
+      <div>
+        {evenNumbers.map((num, index) => (
+          <span key={index}>{num}{index !== evenNumbers.length - 1 ? ', ' : ''}</span>
+        ))}
+      </div>
+    );
+  }
+}
+
+export default OnlyEven;
+
+ЗАДАЧА 3 
+
+import React from 'react';
+
+class Temperature extends React.Component {
+  render() {
+    const { t } = this.props;
+    const textColor = t < 0 ? 'blue' : 'red';
+    return <span style={{ color: textColor }}>{t}</span>;
+  }
+}
+
+export default Temperature;
+
+
+
