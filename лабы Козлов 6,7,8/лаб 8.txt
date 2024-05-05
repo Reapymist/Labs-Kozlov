@@ -1,0 +1,99 @@
+ЗАДАЧА 1 
+
+import React, { useState, useEffect } from 'react';
+
+const Timer = () => {
+  const [count, setCount] = useState(10);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []); // Пустой массив зависимостей, чтобы useEffect запускался только один раз
+
+  useEffect(() => {
+    if (count === 0) {
+      clearInterval(timer);
+    }
+  }, [count]); // Зависимость от переменной count, чтобы остановить таймер при достижении нуля
+
+  return <div>{count}</div>;
+};
+
+export default Timer;
+
+ЗАДАЧА 3 
+
+import React, { useState, useEffect } from 'react';
+
+const isPrime = (num) => {
+  if (num <= 1) return false;
+  if (num <= 3) return true;
+
+  if (num % 2 === 0 || num % 3 === 0) return false;
+
+  let i = 5;
+  while (i * i <= num) {
+    if (num % i === 0 || num % (i + 2) === 0) return false;
+    i += 6;
+  }
+
+  return true;
+};
+
+const PrimeNumbers = () => {
+  const [primes, setPrimes] = useState([2]);
+  const [currentNumber, setCurrentNumber] = useState(3);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isPrime(currentNumber)) {
+        setPrimes((prevPrimes) => [...prevPrimes, currentNumber]);
+      }
+      setCurrentNumber((prevNumber) => prevNumber + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [currentNumber]);
+
+  return (
+    <div>
+      <h2>Простые числа:</h2>
+      <ul>
+        {primes.map((prime, index) => (
+          <li key={index}>{prime}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default PrimeNumbers;
+
+ЗАДАЧА 5 
+
+import React, { useState, useEffect } from 'react';
+
+const Revert = ({ s }) => {
+  const [revertedString, setRevertedString] = useState(s);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRevertedString(prevString => {
+        const lastChar = prevString.charAt(prevString.length - 1);
+        const newString = lastChar + prevString.slice(0, -1);
+        return newString;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return <div>{revertedString}</div>;
+};
+
+export default Revert;
